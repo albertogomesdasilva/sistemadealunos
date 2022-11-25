@@ -1,13 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\ContactsController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ImagesController;
-use App\Http\Controllers\OrganizationsController;
-use App\Http\Controllers\ReportsController;
-use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AlunosController;
+use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\TurmasController;
+use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\TestandoController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\OrganizationsController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,3 +143,39 @@ Route::get('reports', [ReportsController::class, 'index'])
 Route::get('/img/{path}', [ImagesController::class, 'show'])
     ->where('path', '.*')
     ->name('image');
+
+Route::get('/teste', function() {
+    return 'Estou na Rota Teste';
+});
+
+Route::get('/testando', [TestandoController::class, 'index'])
+    ->middleware('auth');
+    
+//****************************************************************** */
+// TURMAS
+Route::get('turmas', [TurmasController::class, 'index'])->middleware('auth')->name('turmas');
+
+Route::get('turmas/cadastrar-nova', [TurmasController::class, 'create'])->middleware('auth');
+
+Route::post('turmas', [TurmasController::class, 'store'])->middleware('auth');
+
+Route::get('turmas/{turma}/editar', [TurmasController::class, 'edit'])->middleware('auth');
+
+Route::put('turmas/{turma}/editar', [TurmasController::class, 'update'])->middleware('auth');
+
+Route::delete('turmas/{turma}', [TurmasController::class, 'destroy'])->middleware('auth');
+
+//****************************************************************** */
+// ALUNOS
+
+Route::get('alunos', [AlunosController::class, 'index'])->middleware('auth')->name('alunos');
+
+Route::get('alunos/cadastrar-novo', [AlunosController::class, 'create'])->middleware('auth');
+
+Route::post('alunos', [AlunosController::class, 'store'])->middleware('auth');
+
+Route::get('alunos/{aluno}/editar', [AlunosController::class, 'edit'])->middleware('auth');
+
+Route::put('alunos/{aluno}/editar', [AlunosController::class, 'update'])->middleware('auth');
+
+Route::delete('alunos/{aluno}', [AlunosController::class, 'destroy'])->middleware('auth');
