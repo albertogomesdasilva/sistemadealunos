@@ -2,23 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nota;
 use Inertia\Inertia;
-use App\Models\Turma;
+use App\Models\Aluno;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestValidation;
-use Illuminate\Support\Facades\Redirect;
 
-class TurmasController extends Controller
+class NotasController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Turmas/Index', [
-            'turmas' => Turma::all()
+        return Inertia::render('Notas/Index', [
+            'notas' => Nota::when($request->aluno, function($query) use($request) {
+                return $query->where('id_aluno', $request->aluno);
+            })
+            ->when($request->search, function ($query) use($request) {
+                return $query->where('nota', 'like', "%$request->search%");
+            })
+                    ->with('aluno')
+                    ->get(),
+            'filters' => [
+                'search' => '',
+                'aluno' => ''
+            ],
+            'alunos' => Aluno::all()
+
         ]);
     }
 
@@ -29,7 +41,7 @@ class TurmasController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Turmas/Create');
+        //
     }
 
     /**
@@ -40,15 +52,7 @@ class TurmasController extends Controller
      */
     public function store(Request $request)
     {
-        Turma::create(
-            $request->validate([
-            'nome' => ['required', 'max:50']
-        ])
-            );
-
-        return Redirect::route('turmas')->with('success', 'Turma Criada com Sucesso.');
-
-
+        //
     }
 
     /**
@@ -68,11 +72,9 @@ class TurmasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Turma $turma)
+    public function edit($id)
     {
-        return Inertia::render('Turmas/Edit', [
-            'turma' => $turma
-        ]);
+        //
     }
 
     /**
@@ -82,15 +84,9 @@ class TurmasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Turma $turma)
+    public function update(Request $request, $id)
     {
-        $turma->update(
-            RequestValidation::validate([
-                'nome' => ['required', 'max:50'],
-            ])
-        );
-
-        return Redirect::back()->with('success', 'Turma atualizada com Sucesso.');
+        //
     }
 
     /**
@@ -99,12 +95,8 @@ class TurmasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Turma $turma)
+    public function destroy($id)
     {
-        $turma->delete();
-
-        return Redirect::route('turmas')->with('success', 'Turma apagada com Sucesso.');
-
-
+        //
     }
 }

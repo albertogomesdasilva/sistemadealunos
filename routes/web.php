@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotasController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AlunosController;
 use App\Http\Controllers\ImagesController;
@@ -179,3 +180,18 @@ Route::get('alunos/{aluno}/editar', [AlunosController::class, 'edit'])->middlewa
 Route::put('alunos/{aluno}/editar', [AlunosController::class, 'update'])->middleware('auth');
 
 Route::delete('alunos/{aluno}', [AlunosController::class, 'destroy'])->middleware('auth');
+
+//************************************************************************************************** */
+// NOTAS
+
+Route::get('notas', [NotasController::class, 'index'])->middleware('auth')->name('notas');
+
+Route::get('notas/cadastrar-nova', [NotasController::class, 'create'])->middleware('auth');
+
+Route::post('notas', [NotasController::class, 'store'])->middleware('auth');
+
+Route::get('notas/{nota}/editar', [NotasController::class, 'edit'])->middleware('auth');
+
+Route::put('notas/{nota}/editar', [NotasController::class, 'update'])->middleware('auth');
+
+Route::delete('notas/{nota}', [NotasController::class, 'destroy'])->middleware('auth');
