@@ -6,6 +6,9 @@ use App\Models\Nota;
 use Inertia\Inertia;
 use App\Models\Aluno;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request as RequestValidation;
 
 class NotasController extends Controller
 {
@@ -41,7 +44,9 @@ class NotasController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Notas/Create', [
+            'alunos'=> Aluno::all()
+        ]);
     }
 
     /**
@@ -52,7 +57,14 @@ class NotasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       Nota::create(
+        $request->validate([
+            'nota'=> ['required'],
+            'id_aluno' => ['required']
+        ])
+        );
+            return Redirect::route('notas')->with('success', 'Nota Cadastrada.');
+            
     }
 
     /**
@@ -72,9 +84,13 @@ class NotasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Nota $nota)
     {
-        //
+        return Inertia::render('Notas/Edit', [
+            'alunos' => Aluno::all(),
+            'nota' => $nota
+
+        ]);
     }
 
     /**
@@ -82,11 +98,18 @@ class NotasController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Nota $nota)
     {
-        //
+        $nota->update(
+            RequestValidation::validate([
+                'nota' => ['required'],
+                'id_aluno' => ['required']
+            ])
+        );
+
+        return Redirect::back()->with('success', 'Nota atualizada com sucesso');
     }
 
     /**
@@ -95,8 +118,10 @@ class NotasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Nota $nota)
     {
-        //
+        $nota->delete();
+
+        return Redirect::route('notas')->with('success', 'A Nota foi excluída com sucesso.');
     }
 }

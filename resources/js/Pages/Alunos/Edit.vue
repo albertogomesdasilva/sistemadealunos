@@ -13,6 +13,15 @@
             <option :value="null" />
             <option v-for="turma in turmas" :key="turma.id" :value="turma.id">{{ turma.nome }}</option>
           </select-input>
+
+          <div v-if="aluno.notas.length > 0">
+            <h3 class="w-full font-bold mb-3">Notas:</h3>
+            <ul>
+              <li v-for="nota in aluno.notas" :key="nota.id" class="mb-3">{{ nota.nota }}</li>
+            </ul>
+          </div>
+
+
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button v-if="!aluno.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Excluir Aluno</button>

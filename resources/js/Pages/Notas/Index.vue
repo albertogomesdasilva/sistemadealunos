@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="Notas" />
-    <h1 class="mb-8 text-3xl font-bold">Alunos</h1>
+    <h1 class="mb-8 text-3xl font-bold">Notas</h1>
     <div class="flex items-center justify-between mb-6">
       
       <search-filter v-model="form.search"  class="mr-4 w-full max-w-md" @reset="reset">
@@ -11,7 +11,7 @@
           <option v-for="aluno in alunos" :key="aluno.id" :value="aluno.id">{{ aluno.nome }}</option>
         </select>
       </search-filter> 
-      <Link class="btn-indigo" href="/alunos/cadastrar-nova">
+      <Link class="btn-indigo" href="/notas/cadastrar-nova">
         <span>Nova</span>
         <span class="hidden md:inline">&nbsp;Nota</span>
       </Link>

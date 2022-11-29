@@ -35,7 +35,7 @@
             <td class="border-t">
               <Link class="flex items-center px-6 py-4"  tabindex="-1" :href="`/turmas/${turma.id}/editar`">
                 <div>
-                  0
+                  {{ turma.alunos.length }}
                 </div>
               </Link>
             </td>

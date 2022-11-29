@@ -82,7 +82,7 @@ class AlunosController extends Controller
     public function edit(Aluno $aluno)
     {
         return Inertia::render('Alunos/Edit', [
-            'aluno' => $aluno,
+            'aluno' => $aluno->load('notas'),
             'turmas' =>Turma::all()
         ]);
     }

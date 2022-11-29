@@ -10,4 +10,9 @@ class Turma extends Model
     use HasFactory;
 
     protected $fillable = ['nome'];
+
+    public function alunos() 
+    {
+        return $this->hasMany(Aluno::class, 'id_turma');
+    }
 }

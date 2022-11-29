@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Nota;
+use App\Models\Turma;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Aluno extends Model
 {
@@ -17,5 +19,10 @@ class Aluno extends Model
     public function turma()
     {
         return $this->belongsTo(Turma::class, 'id_turma');
+    }
+
+    public function notas()
+    {
+        return $this->hasMany(Nota::class, 'id_aluno');
     }
 }

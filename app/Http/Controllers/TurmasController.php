@@ -18,7 +18,7 @@ class TurmasController extends Controller
     public function index()
     {
         return Inertia::render('Turmas/Index', [
-            'turmas' => Turma::all()
+            'turmas' => Turma::with('alunos')-> get()
         ]);
     }
 
