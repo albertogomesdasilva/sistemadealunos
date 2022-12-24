@@ -195,3 +195,5 @@ Route::get('notas/{nota}/editar', [NotasController::class, 'edit'])->middleware(
 Route::put('notas/{nota}/editar', [NotasController::class, 'update'])->middleware('auth');
 
 Route::delete('notas/{nota}', [NotasController::class, 'destroy'])->middleware('auth');
+
+Route::get('teste', [TestandoController::class, 'teste'])->name('teste');
